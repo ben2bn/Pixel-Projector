@@ -10,9 +10,7 @@ using System.Linq;
 public partial class InputComponent : Node, IComponent, IHasComponentDependency
 {
     [Signal]
-    public delegate void OnPressPlantEventHandler();
-    [Signal]
-    public delegate void OnPressInteractEventHandler();
+    public delegate void OnPressBonkEventHandler();
     [Signal]
     public delegate void OnChangeMoveDirectionEventHandler(Vector2 moveDirection);
 
@@ -45,7 +43,7 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
 
     public override void _Process(double delta)
     {
-
+        CheckBonkInput();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -62,6 +60,14 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
         {
             MoveDirection = newMoveDirection;
             EmitSignal(SignalName.OnChangeMoveDirection, MoveDirection);
+        }
+    }
+
+    private void CheckBonkInput()
+    {
+        if (Input.IsActionPressed("Bonk"))
+        {
+            EmitSignal(SignalName.OnPressBonk);
         }
     }
 

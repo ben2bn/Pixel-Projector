@@ -1,12 +1,60 @@
 [gd_scene format=3 uid="uid://cavtvybajvjc6"]
 
 [ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_3e2tf"]
+[ext_resource type="Animation" uid="uid://cnyw2iwgl7pkx" path="res://Assets/Animations/Bonking.res" id="1_y63lr"]
 [ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="2_b2ifw"]
 [ext_resource type="Script" uid="uid://cpj4frgum1t4a" path="res://Assets/Scripts/Components/InputComponent.cs" id="2_mifcl"]
 [ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_2thea"]
 [ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_jqe1p"]
+[ext_resource type="Script" uid="uid://c5t1ttkomimsb" path="res://Assets/Scripts/Components/HitBoxComponent.cs" id="5_n6g26"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="6_jqe1p"]
 [ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="7_n6g26"]
+[ext_resource type="Script" uid="uid://qsidyy2tv12o" path="res://Assets/Scripts/States/BonkingState.cs" id="10_jjopo"]
+
+[sub_resource type="Animation" id="Animation_twodr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComponentManager/HitBoxComponent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(35, -35)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ComponentManager/HitBoxComponent:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.7853982]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ComponentManager/HitBoxComponent:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y63lr"]
+_data = {
+&"Bonking": ExtResource("1_y63lr"),
+&"RESET": SubResource("Animation_twodr")
+}
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0ccr5"]
 radius = 30.0
@@ -15,7 +63,17 @@ height = 60.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_3e2tf"]
 radius = 30.0
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_n6g26"]
+radius = 10.0
+height = 64.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_twodr"]
+height = 64.0
+
 [node name="Player" type="CharacterBody2D" unique_id=287953057]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=865650064]
+libraries/ = SubResource("AnimationLibrary_y63lr")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=262761708]
 mesh = SubResource("CapsuleMesh_0ccr5")
@@ -45,6 +103,19 @@ Body = NodePath("../..")
 VelocityComponent = NodePath("../VelocityComponent")
 metadata/_custom_type_script = "uid://1diitr0ynwem"
 
+[node name="HitBoxComponent" type="Area2D" parent="ComponentManager" unique_id=2036918087]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(35, -35)
+rotation = 0.7853982
+script = ExtResource("5_n6g26")
+metadata/_custom_type_script = "uid://c5t1ttkomimsb"
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ComponentManager/HitBoxComponent" unique_id=616075097]
+mesh = SubResource("CapsuleMesh_n6g26")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HitBoxComponent" unique_id=715535787]
+shape = SubResource("CapsuleShape2D_twodr")
+
 [node name="StateMachine" type="Node" parent="." unique_id=1532210069 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
 script = ExtResource("2_b2ifw")
 DefaultState = NodePath("IdleState")
@@ -60,3 +131,10 @@ metadata/_custom_type_script = "uid://dmcgbygaafx8b"
 script = ExtResource("7_n6g26")
 MovementComponent = NodePath("../../ComponentManager/MovementComponent")
 metadata/_custom_type_script = "uid://bdo0723a864yq"
+
+[node name="BonkingState" type="Node" parent="StateMachine" unique_id=558446014 node_paths=PackedStringArray("AnimationPlayer", "InputComponent")]
+script = ExtResource("10_jjopo")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+BonkingAnimation = ExtResource("1_y63lr")
+InputComponent = NodePath("../../ComponentManager/InputComponent")
+metadata/_custom_type_script = "uid://qsidyy2tv12o"
