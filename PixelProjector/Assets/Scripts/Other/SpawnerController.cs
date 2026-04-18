@@ -12,13 +12,13 @@ public partial class SpawnerController : Control
         get => maxCountValue;
         set
         {
-            if (maxCountValue > 0) return;
+            if (maxCountValue < 0) return;
 
             maxCountValue = value;
             EmitSignal(SignalName.OnMaxCountValueChanged, maxCountValue);
         }
     }
-    private int maxCountValue = 40;
+    private int maxCountValue = 5;
 
     [Export]
     public Label ValueLeftDisplay { get; private set; }
@@ -45,6 +45,11 @@ public partial class SpawnerController : Control
             CustomIncrementer incrementer = spawnerIncrement as CustomIncrementer;
             incrementer.OnCountValueChanged += OnUsedCountValueChange;
         }
+    }
+
+    public void OnUsedCountValueChange(Color color, int value)
+    {
+        OnUsedCountValueChange(value);
     }
 
     public void OnUsedCountValueChange(int value)

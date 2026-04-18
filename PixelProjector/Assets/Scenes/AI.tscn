@@ -3,12 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://dj236xkfxm2iw" path="res://Assets/Art/Robot.png" id="1_3drhf"]
 [ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_lnwrg"]
 [ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_mpbkf"]
-[ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_egh1s"]
 [ext_resource type="Script" uid="uid://c5t1ttkomimsb" path="res://Assets/Scripts/Components/HitBoxComponent.cs" id="5_mooy1"]
 [ext_resource type="Script" uid="uid://bx3deg1ai6tu3" path="res://Assets/Scripts/Components/InteractComponent.cs" id="5_wcmux"]
 [ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="6_snuto"]
+[ext_resource type="Script" uid="uid://csmxybltq1fq0" path="res://Assets/Scripts/Components/PathfindingComponent.cs" id="7_lnwrg"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="7_x3g7x"]
-[ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="8_2srsc"]
+[ext_resource type="Script" uid="uid://c2no1h3vg3g0k" path="res://Assets/Scripts/States/AIMovingState.cs" id="10_lnwrg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_msvdv"]
 radius = 30.0
@@ -43,6 +43,10 @@ color = Color(0, 0.32156864, 1, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=597348253]
 shape = SubResource("CircleShape2D_msvdv")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=55086158]
+target_desired_distance = 36.0
+debug_enabled = true
+
 [node name="ComponentManager" type="Node2D" parent="." unique_id=2072505304 node_paths=PackedStringArray("ComponentManagerOwner")]
 script = ExtResource("1_lnwrg")
 ComponentManagerOwner = NodePath("..")
@@ -50,12 +54,6 @@ ComponentManagerOwner = NodePath("..")
 [node name="VelocityComponent" type="Node" parent="ComponentManager" unique_id=1067703261]
 script = ExtResource("3_mpbkf")
 metadata/_custom_type_script = "uid://d0rpv0w72nnme"
-
-[node name="MovementComponent" type="Node" parent="ComponentManager" unique_id=1690066719 node_paths=PackedStringArray("Body", "VelocityComponent")]
-script = ExtResource("4_egh1s")
-Body = NodePath("../..")
-VelocityComponent = NodePath("../VelocityComponent")
-metadata/_custom_type_script = "uid://1diitr0ynwem"
 
 [node name="HitBoxComponent" type="Area2D" parent="ComponentManager" unique_id=1285426431]
 collision_layer = 4
@@ -73,6 +71,13 @@ metadata/_custom_type_script = "uid://bx3deg1ai6tu3"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/InteractComponent" unique_id=381731587]
 shape = SubResource("CircleShape2D_msvdv")
 
+[node name="PathfindingComponent" type="Node" parent="ComponentManager" unique_id=2096076424 node_paths=PackedStringArray("VelocityComponent", "Body", "NavigationAgent")]
+script = ExtResource("7_lnwrg")
+VelocityComponent = NodePath("../VelocityComponent")
+Body = NodePath("../..")
+NavigationAgent = NodePath("../../NavigationAgent2D")
+metadata/_custom_type_script = "uid://csmxybltq1fq0"
+
 [node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
 script = ExtResource("6_snuto")
 DefaultState = NodePath("IdleState")
@@ -84,7 +89,7 @@ metadata/_custom_type_script = "uid://bwui3qtjj7bp4"
 script = ExtResource("7_x3g7x")
 metadata/_custom_type_script = "uid://dmcgbygaafx8b"
 
-[node name="RunningState" type="Node" parent="StateMachine" unique_id=1281793044 node_paths=PackedStringArray("MovementComponent")]
-script = ExtResource("8_2srsc")
-MovementComponent = NodePath("../../ComponentManager/MovementComponent")
-metadata/_custom_type_script = "uid://bdo0723a864yq"
+[node name="AIMovingState" type="Node" parent="StateMachine" unique_id=436848613 node_paths=PackedStringArray("PathfindingComponent")]
+script = ExtResource("10_lnwrg")
+PathfindingComponent = NodePath("../../ComponentManager/PathfindingComponent")
+metadata/_custom_type_script = "uid://c2no1h3vg3g0k"
