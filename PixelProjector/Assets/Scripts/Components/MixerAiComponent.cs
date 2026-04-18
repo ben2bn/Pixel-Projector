@@ -65,7 +65,7 @@ public partial class MixerAiComponent : Node, IComponent
 	}
 
 
-	private void GetTasks()
+	public void GetTasks()
 	{
 		var httpRequest = new HttpRequest();
 		AddChild(httpRequest);

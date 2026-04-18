@@ -57,10 +57,11 @@ ComponentManagerOwner = NodePath("..")
 script = ExtResource("3_mpbkf")
 metadata/_custom_type_script = "uid://d0rpv0w72nnme"
 
-[node name="HitBoxComponent" type="Area2D" parent="ComponentManager" unique_id=1285426431]
+[node name="HitBoxComponent" type="Area2D" parent="ComponentManager" unique_id=1285426431 node_paths=PackedStringArray("MixerAiComponent")]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("5_mooy1")
+MixerAiComponent = NodePath("../MixerAiComponent")
 metadata/_custom_type_script = "uid://c5t1ttkomimsb"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HitBoxComponent" unique_id=1805753156]
@@ -95,11 +96,9 @@ grow_vertical = 2
 script = ExtResource("7_qff7d")
 metadata/_custom_type_script = "uid://bi7nesh63pksp"
 
-[node name="MixerAiComponent" type="Node" parent="ComponentManager" unique_id=1672757130 node_paths=PackedStringArray("PathComponent", "InteractComp", "HoldPixelComp")]
+[node name="MixerAiComponent" type="Node" parent="ComponentManager" unique_id=1672757130 node_paths=PackedStringArray("PathComponent")]
 script = ExtResource("8_qff7d")
 PathComponent = NodePath("../PathfindingComponent")
-InteractComp = NodePath("../InteractComponent")
-HoldPixelComp = NodePath("../HoldPixelComponent")
 metadata/_custom_type_script = "uid://bkgnbjmdj8c15"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
