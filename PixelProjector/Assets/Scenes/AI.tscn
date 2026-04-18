@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bx3deg1ai6tu3" path="res://Assets/Scripts/Components/InteractComponent.cs" id="5_wcmux"]
 [ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="6_snuto"]
 [ext_resource type="Script" uid="uid://csmxybltq1fq0" path="res://Assets/Scripts/Components/PathfindingComponent.cs" id="7_lnwrg"]
+[ext_resource type="Script" uid="uid://bi7nesh63pksp" path="res://Assets/Scripts/Components/HoldPixelComponent.cs" id="7_qff7d"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="7_x3g7x"]
 [ext_resource type="Script" uid="uid://c2no1h3vg3g0k" path="res://Assets/Scripts/States/AIMovingState.cs" id="10_lnwrg"]
 
@@ -77,6 +78,19 @@ VelocityComponent = NodePath("../VelocityComponent")
 Body = NodePath("../..")
 NavigationAgent = NodePath("../../NavigationAgent2D")
 metadata/_custom_type_script = "uid://csmxybltq1fq0"
+
+[node name="HoldPixelComponent" type="ColorRect" parent="ComponentManager" unique_id=2142951641]
+visible = false
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_vertical = 2
+script = ExtResource("7_qff7d")
+metadata/_custom_type_script = "uid://bi7nesh63pksp"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
 script = ExtResource("6_snuto")
