@@ -236,4 +236,40 @@ public partial class QuestMaker : Node
     {
         GameScoreCounter.Text = GameScore.ToString();
     }
+
+    public string GetHTTPColorQuests()
+    {
+        string colors = "";
+        if (RedQuest > 0)
+        {
+            colors += "red+";
+        }
+        if (BlueQuest > 0)
+        {
+            colors += "blue+";
+        }
+        if (GreenQuest > 0)
+        {
+            colors += "green+";
+        }
+        if (CyanQuest > 0)
+        {
+            colors += "cyan+";
+        }
+        if (YellowQuest > 0)
+        {
+            colors += "yellow+";
+        }
+        if (MagentaQuest > 0)
+        {
+            colors += "magenta+";
+        }
+
+        if (colors.Length > 0)
+        {
+            colors = colors.Remove(colors.Length - 1);
+        }
+
+        return colors;
+    }
 }

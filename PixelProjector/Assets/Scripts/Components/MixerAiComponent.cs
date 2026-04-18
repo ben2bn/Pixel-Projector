@@ -35,6 +35,9 @@ public partial class MixerAiComponent : Node, IComponent
 	[Signal]
 	public delegate void StartAiLoopEventHandler();
 
+	[Export]
+	public QuestMaker QuestMaker { get; private set; }
+
 
 	// void IHasComponentDependency.TryUpdateComponentDependencies(ComponentManager componentManager)
 	// {
@@ -58,7 +61,8 @@ public partial class MixerAiComponent : Node, IComponent
 
 		// Perform a GET request. The URL below returns JSON as of writing.
 		GD.Print("Performing HTTP request...");
-		Error error = httpRequest.Request("http://127.0.0.1:5000/mixer?color=magenta+cyan&owned=0+0+0+0+0+0&available=0+0+0+0+0+0");
+		string colorQuests = QuestMaker.GetHTTPColorQuests();
+		Error error = httpRequest.Request("http://10.20.17.103:5000/mixer?color="+colorQuests+"&owned=0+0+0+0+0+0&available=0+0+0+0+0+0");
 		GD.Print("HTTP request sent.");
 		if (error != Error.Ok)
 		{
