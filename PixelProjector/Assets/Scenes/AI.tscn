@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cg6ecqy2716d6"]
+
+[ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_lnwrg"]
+[ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_mpbkf"]
+[ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_egh1s"]
+[ext_resource type="Script" uid="uid://c5t1ttkomimsb" path="res://Assets/Scripts/Components/HitBoxComponent.cs" id="5_mooy1"]
+[ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="6_snuto"]
+[ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="7_x3g7x"]
+[ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="8_2srsc"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_huhmh"]
+radius = 30.0
+height = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_msvdv"]
+radius = 30.0
+
+[node name="AI" type="CharacterBody2D" unique_id=1753803494]
+collision_layer = 2
+collision_mask = 0
+motion_mode = 1
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=426427001]
+mesh = SubResource("CapsuleMesh_huhmh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=597348253]
+shape = SubResource("CircleShape2D_msvdv")
+
+[node name="CameraAnchor" type="Node2D" parent="." unique_id=2130496924]
+
+[node name="Camera2D" type="Camera2D" parent="CameraAnchor" unique_id=1406794558]
+
+[node name="ComponentManager" type="Node2D" parent="." unique_id=2072505304 node_paths=PackedStringArray("ComponentManagerOwner")]
+script = ExtResource("1_lnwrg")
+ComponentManagerOwner = NodePath("..")
+
+[node name="VelocityComponent" type="Node" parent="ComponentManager" unique_id=1067703261]
+script = ExtResource("3_mpbkf")
+metadata/_custom_type_script = "uid://d0rpv0w72nnme"
+
+[node name="MovementComponent" type="Node" parent="ComponentManager" unique_id=1690066719 node_paths=PackedStringArray("Body", "VelocityComponent")]
+script = ExtResource("4_egh1s")
+Body = NodePath("../..")
+VelocityComponent = NodePath("../VelocityComponent")
+metadata/_custom_type_script = "uid://1diitr0ynwem"
+
+[node name="HitBoxComponent" type="Area2D" parent="ComponentManager" unique_id=1285426431]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("5_mooy1")
+metadata/_custom_type_script = "uid://c5t1ttkomimsb"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HitBoxComponent" unique_id=1805753156]
+shape = SubResource("CircleShape2D_msvdv")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
+script = ExtResource("6_snuto")
+DefaultState = NodePath("IdleState")
+StateOwner = NodePath("..")
+ComponentManager = NodePath("../ComponentManager")
+metadata/_custom_type_script = "uid://bwui3qtjj7bp4"
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1535136231]
+script = ExtResource("7_x3g7x")
+metadata/_custom_type_script = "uid://dmcgbygaafx8b"
+
+[node name="RunningState" type="Node" parent="StateMachine" unique_id=1281793044 node_paths=PackedStringArray("MovementComponent")]
+script = ExtResource("8_2srsc")
+MovementComponent = NodePath("../../ComponentManager/MovementComponent")
+metadata/_custom_type_script = "uid://bdo0723a864yq"

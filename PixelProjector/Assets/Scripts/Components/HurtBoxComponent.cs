@@ -4,7 +4,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class HurBoxtComponent : Area2D, IComponent
+public partial class HurtBoxComponent : Area2D, IComponent
 {
     public override void _Ready()
     {
@@ -16,6 +16,6 @@ public partial class HurBoxtComponent : Area2D, IComponent
         if (!enteredArea.IsValidInstance() || enteredArea is not HitBoxComponent) return;
 
         HitBoxComponent hitBoxComponent = (HitBoxComponent)enteredArea;
-        //hitBoxComponent.HealthComponent.RemoveToCurrentHealth(Damage);
+        hitBoxComponent.EmitSignal(HitBoxComponent.SignalName.OnHitByHurtBoxComponent);
     }
 }

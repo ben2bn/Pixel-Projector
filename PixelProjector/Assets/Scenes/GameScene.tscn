@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddba151pgcc67"]
 
 [ext_resource type="PackedScene" uid="uid://cavtvybajvjc6" path="res://Assets/Scenes/Player.tscn" id="1_6us55"]
+[ext_resource type="PackedScene" uid="uid://cg6ecqy2716d6" path="res://Assets/Scenes/AI.tscn" id="2_c88g3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6us55"]
 size = Vector3(10, 10, 10)
@@ -12,3 +13,6 @@ size = Vector3(10, 10, 10)
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1917372242]
 position = Vector2(74, -10)
 mesh = SubResource("BoxMesh_6us55")
+
+[node name="AI" parent="." unique_id=1753803494 instance=ExtResource("2_c88g3")]
+position = Vector2(-111, -2)

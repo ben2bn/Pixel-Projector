@@ -32,9 +32,6 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
 
     public Vector2 MoveDirection { get; private set; }
 
-    //debug only
-    [Export]
-    public Node Component { get; private set; }
 
     public override void _EnterTree()
     {

@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://cpj4frgum1t4a" path="res://Assets/Scripts/Components/InputComponent.cs" id="2_mifcl"]
 [ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_2thea"]
 [ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_jqe1p"]
-[ext_resource type="Script" uid="uid://c5t1ttkomimsb" path="res://Assets/Scripts/Components/HitBoxComponent.cs" id="5_n6g26"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="6_jqe1p"]
+[ext_resource type="Script" uid="uid://bw06op8n6l0ki" path="res://Assets/Scripts/Components/HurtBoxComponent.cs" id="6_y63lr"]
 [ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="7_n6g26"]
 [ext_resource type="Script" uid="uid://qsidyy2tv12o" path="res://Assets/Scripts/States/BonkingState.cs" id="10_jjopo"]
 
@@ -16,7 +16,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ComponentManager/HitBoxComponent:position")
+tracks/0/path = NodePath("ComponentManager/HurtBoxComponent:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -28,7 +28,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("ComponentManager/HitBoxComponent:rotation")
+tracks/1/path = NodePath("ComponentManager/HurtBoxComponent:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -40,7 +40,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ComponentManager/HitBoxComponent:modulate")
+tracks/2/path = NodePath("ComponentManager/HurtBoxComponent:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -71,6 +71,9 @@ height = 64.0
 height = 64.0
 
 [node name="Player" type="CharacterBody2D" unique_id=287953057]
+collision_layer = 2
+collision_mask = 0
+motion_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=865650064]
 libraries/ = SubResource("AnimationLibrary_y63lr")
@@ -85,8 +88,9 @@ shape = SubResource("CircleShape2D_3e2tf")
 
 [node name="Camera2D" type="Camera2D" parent="CameraAnchor" unique_id=1416998643]
 
-[node name="ComponentManager" type="Node2D" parent="." unique_id=1846392722]
+[node name="ComponentManager" type="Node2D" parent="." unique_id=1846392722 node_paths=PackedStringArray("ComponentManagerOwner")]
 script = ExtResource("1_3e2tf")
+ComponentManagerOwner = NodePath(".")
 
 [node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent")]
 script = ExtResource("2_mifcl")
@@ -103,17 +107,19 @@ Body = NodePath("../..")
 VelocityComponent = NodePath("../VelocityComponent")
 metadata/_custom_type_script = "uid://1diitr0ynwem"
 
-[node name="HitBoxComponent" type="Area2D" parent="ComponentManager" unique_id=2036918087]
+[node name="HurtBoxComponent" type="Area2D" parent="ComponentManager" unique_id=197270434]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(35, -35)
 rotation = 0.7853982
-script = ExtResource("5_n6g26")
-metadata/_custom_type_script = "uid://c5t1ttkomimsb"
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("6_y63lr")
+metadata/_custom_type_script = "uid://bw06op8n6l0ki"
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="ComponentManager/HitBoxComponent" unique_id=616075097]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="ComponentManager/HurtBoxComponent" unique_id=616075097]
 mesh = SubResource("CapsuleMesh_n6g26")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HitBoxComponent" unique_id=715535787]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HurtBoxComponent" unique_id=715535787]
 shape = SubResource("CapsuleShape2D_twodr")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1532210069 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
