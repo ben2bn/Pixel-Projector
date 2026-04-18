@@ -69,5 +69,5 @@ def combine_paints(color: str, position: int) -> str:
 painter_llm = ChatGoogleGenerativeAI(
     model="gemini-3-flash-preview",
     temperature=1.0,
-    thinking_level="low"
+    thinking_level="medium"
 ).bind_tools([go_collect_paint, combine_paints])
