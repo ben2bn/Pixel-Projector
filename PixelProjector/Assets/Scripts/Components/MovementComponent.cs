@@ -13,6 +13,9 @@ public partial class MovementComponent : Node, IComponent, IHasComponentDependen
     public VelocityComponent VelocityComponent { get; private set; }
 
     [Export]
+    public float RotationSmoothingConstant { get; private set; } = 25f;
+
+    [Export]
     public bool CanMove { get; set; } = true;
 
     public override void _EnterTree()
@@ -39,6 +42,7 @@ public partial class MovementComponent : Node, IComponent, IHasComponentDependen
 
         Body.Velocity = VelocityComponent.Velocity;
         Body.MoveAndSlide();
+        Body.GlobalRotation = Mathf.Lerp(Body.GlobalRotation, Body.GlobalRotation + Body.GetAngleTo(Body.GlobalPosition + VelocityComponent.Velocity), 1.0f - Mathf.Exp(-RotationSmoothingConstant * (float)delta));
     }
 
     void IHasComponentDependency.TryUpdateComponentDependencies(ComponentManager componentManager)

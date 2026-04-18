@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bcsjbm04x1gb3"]
+
+[ext_resource type="Script" uid="uid://o3dkbi6qkkf" path="res://Assets/Scripts/Other/CustomIncrementer.cs" id="1_5o17j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jjopo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_evjpc"]
+
+[node name="Red" type="HBoxContainer" unique_id=669463488 node_paths=PackedStringArray("ColorDisplay", "ValueDisplay", "Increment", "Decrement")]
+script = ExtResource("1_5o17j")
+Color = Color(1, 0, 0, 1)
+ColorDisplay = NodePath("ColorDisplay")
+ValueDisplay = NodePath("PanelContainer/ValueDisplay")
+Increment = NodePath("Increment")
+Decrement = NodePath("Decrement")
+
+[node name="ColorDisplay" type="ColorRect" parent="." unique_id=1925987870]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 0, 0, 1)
+
+[node name="Increment" type="Button" parent="." unique_id=2127459878]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Increment" unique_id=1561876192]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "+"
+label_settings = SubResource("LabelSettings_jjopo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Decrement" type="Button" parent="." unique_id=893625173]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Decrement" unique_id=646605716]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "-"
+label_settings = SubResource("LabelSettings_evjpc")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1184300730]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ValueDisplay" type="Label" parent="PanelContainer" unique_id=1695294382]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1

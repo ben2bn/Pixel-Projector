@@ -3,13 +3,16 @@
 [ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_3e2tf"]
 [ext_resource type="Animation" uid="uid://cnyw2iwgl7pkx" path="res://Assets/Animations/Bonking.res" id="1_y63lr"]
 [ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="2_b2ifw"]
+[ext_resource type="Texture2D" uid="uid://dj236xkfxm2iw" path="res://Assets/Art/Robot.png" id="2_jjopo"]
 [ext_resource type="Script" uid="uid://cpj4frgum1t4a" path="res://Assets/Scripts/Components/InputComponent.cs" id="2_mifcl"]
 [ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_2thea"]
 [ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_jqe1p"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="6_jqe1p"]
 [ext_resource type="Script" uid="uid://bw06op8n6l0ki" path="res://Assets/Scripts/Components/HurtBoxComponent.cs" id="6_y63lr"]
 [ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="7_n6g26"]
-[ext_resource type="Script" uid="uid://qsidyy2tv12o" path="res://Assets/Scripts/States/BonkingState.cs" id="10_jjopo"]
+[ext_resource type="Script" uid="uid://hrf34y8ib6hm" path="res://Assets/Scripts/Components/BonkingComponent.cs" id="7_y63lr"]
+[ext_resource type="PackedScene" uid="uid://bcsjbm04x1gb3" path="res://Assets/Scenes/CustomIncrementer.tscn" id="12_evjpc"]
+[ext_resource type="Script" uid="uid://qrlywhyfywd3" path="res://Assets/Scripts/Other/SpawnerController.cs" id="12_o5e1w"]
 
 [sub_resource type="Animation" id="Animation_twodr"]
 length = 0.001
@@ -56,10 +59,6 @@ _data = {
 &"RESET": SubResource("Animation_twodr")
 }
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0ccr5"]
-radius = 30.0
-height = 60.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_3e2tf"]
 radius = 30.0
 
@@ -67,19 +66,46 @@ radius = 30.0
 radius = 10.0
 height = 64.0
 
+[sub_resource type="Gradient" id="Gradient_y63lr"]
+colors = PackedColorArray(0.42178234, 0.13216347, 0, 1, 0.42352942, 0.13333334, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jjopo"]
+gradient = SubResource("Gradient_y63lr")
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_twodr"]
 height = 64.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_evjpc"]
+
 [node name="Player" type="CharacterBody2D" unique_id=287953057]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 3
 motion_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=865650064]
 libraries/ = SubResource("AnimationLibrary_y63lr")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=262761708]
-mesh = SubResource("CapsuleMesh_0ccr5")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2062723467]
+z_index = 2
+texture_filter = 1
+rotation = 1.5707964
+texture = ExtResource("2_jjopo")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D" unique_id=2073859576]
+z_index = 1
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -44.3125
+offset_right = -10.0
+offset_bottom = -15.6875
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=711766881]
 shape = SubResource("CircleShape2D_3e2tf")
@@ -92,10 +118,9 @@ shape = SubResource("CircleShape2D_3e2tf")
 script = ExtResource("1_3e2tf")
 ComponentManagerOwner = NodePath(".")
 
-[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent", "InteractComponent")]
+[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent")]
 script = ExtResource("2_mifcl")
 VelocityComponent = NodePath("../VelocityComponent")
-InteractComponent = NodePath("")
 metadata/_custom_type_script = "uid://cpj4frgum1t4a"
 
 [node name="VelocityComponent" type="Node" parent="ComponentManager" unique_id=1872864884]
@@ -119,9 +144,17 @@ metadata/_custom_type_script = "uid://bw06op8n6l0ki"
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="ComponentManager/HurtBoxComponent" unique_id=616075097]
 mesh = SubResource("CapsuleMesh_n6g26")
+texture = SubResource("GradientTexture1D_jjopo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HurtBoxComponent" unique_id=715535787]
 shape = SubResource("CapsuleShape2D_twodr")
+
+[node name="BonkingComponent" type="Node" parent="ComponentManager" unique_id=1977221515 node_paths=PackedStringArray("AnimationPlayer", "InputComponent")]
+script = ExtResource("7_y63lr")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+BonkingAnimation = ExtResource("1_y63lr")
+InputComponent = NodePath("../InputComponent")
+metadata/_custom_type_script = "uid://hrf34y8ib6hm"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1532210069 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
 script = ExtResource("2_b2ifw")
@@ -139,9 +172,51 @@ script = ExtResource("7_n6g26")
 MovementComponent = NodePath("../../ComponentManager/MovementComponent")
 metadata/_custom_type_script = "uid://bdo0723a864yq"
 
-[node name="BonkingState" type="Node" parent="StateMachine" unique_id=558446014 node_paths=PackedStringArray("AnimationPlayer", "InputComponent")]
-script = ExtResource("10_jjopo")
-AnimationPlayer = NodePath("../../AnimationPlayer")
-BonkingAnimation = ExtResource("1_y63lr")
-InputComponent = NodePath("../../ComponentManager/InputComponent")
-metadata/_custom_type_script = "uid://qsidyy2tv12o"
+[node name="UI" type="CanvasLayer" parent="." unique_id=184385250]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=372721958]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+
+[node name="SpawnerController" type="VBoxContainer" parent="UI/MarginContainer" unique_id=537086061 node_paths=PackedStringArray("ValueLeftDisplay", "SpawnerIncrements")]
+layout_mode = 2
+script = ExtResource("12_o5e1w")
+ValueLeftDisplay = NodePath("Panel/ValueLeft")
+SpawnerIncrements = NodePath("SpawnerIncrements")
+
+[node name="Panel" type="Panel" parent="UI/MarginContainer/SpawnerController" unique_id=1516210759]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="ValueLeft" type="Label" parent="UI/MarginContainer/SpawnerController/Panel" unique_id=1173689611]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_evjpc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpawnerIncrements" type="VBoxContainer" parent="UI/MarginContainer/SpawnerController" unique_id=395480223]
+layout_mode = 2
+
+[node name="Red" parent="UI/MarginContainer/SpawnerController/SpawnerIncrements" unique_id=669463488 instance=ExtResource("12_evjpc")]
+layout_mode = 2
+
+[node name="Green" parent="UI/MarginContainer/SpawnerController/SpawnerIncrements" unique_id=1995111958 instance=ExtResource("12_evjpc")]
+layout_mode = 2
+Color = Color(0, 1, 0, 1)
+
+[node name="Blue" parent="UI/MarginContainer/SpawnerController/SpawnerIncrements" unique_id=1624166936 instance=ExtResource("12_evjpc")]
+layout_mode = 2
+Color = Color(0, 0, 1, 1)

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ep0vflru0ccs"]
+
+[ext_resource type="PackedScene" uid="uid://clbtvlbu5qydo" path="res://Assets/Scenes/ItemBox.tscn" id="1_tc8fo"]
+[ext_resource type="Script" uid="uid://cm0hko6fcdgtc" path="res://Assets/Scripts/Components/SpawnerComponent.cs" id="2_60d2h"]
+
+[node name="ItemBox" unique_id=1220010527 instance=ExtResource("1_tc8fo")]
+
+[node name="ItemBoxComponent" parent="ComponentManager" parent_id_path=PackedInt32Array(1623796880) index="0" unique_id=1316519909]
+PixelColor = Color(1, 0, 0, 1)
+IsFixColor = true
+
+[node name="SpawnerComponent" type="Node" parent="ComponentManager" parent_id_path=PackedInt32Array(1623796880) index="1" unique_id=1494756028 node_paths=PackedStringArray("ItemBoxComponent")]
+script = ExtResource("2_60d2h")
+ItemBoxComponent = NodePath("../ItemBoxComponent")
+metadata/_custom_type_script = "uid://cm0hko6fcdgtc"

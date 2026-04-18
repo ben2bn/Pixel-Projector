@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cg6ecqy2716d6"]
 
+[ext_resource type="Texture2D" uid="uid://dj236xkfxm2iw" path="res://Assets/Art/Robot.png" id="1_3drhf"]
 [ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_lnwrg"]
 [ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_mpbkf"]
 [ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_egh1s"]
@@ -9,27 +10,38 @@
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="7_x3g7x"]
 [ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="8_2srsc"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_huhmh"]
-radius = 30.0
-height = 60.0
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_msvdv"]
 radius = 30.0
 
 [node name="AI" type="CharacterBody2D" unique_id=1753803494]
 collision_layer = 2
-collision_mask = 0
+collision_mask = 3
 motion_mode = 1
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=426427001]
-mesh = SubResource("CapsuleMesh_huhmh")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=193754401]
+z_index = 2
+texture_filter = 1
+rotation = 1.5707964
+texture = ExtResource("1_3drhf")
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D" unique_id=267482437]
+z_index = 1
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -44.3125
+offset_right = -10.0
+offset_bottom = -15.6875
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.32156864, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=597348253]
 shape = SubResource("CircleShape2D_msvdv")
-
-[node name="CameraAnchor" type="Node2D" parent="." unique_id=2130496924]
-
-[node name="Camera2D" type="Camera2D" parent="CameraAnchor" unique_id=1406794558]
 
 [node name="ComponentManager" type="Node2D" parent="." unique_id=2072505304 node_paths=PackedStringArray("ComponentManagerOwner")]
 script = ExtResource("1_lnwrg")

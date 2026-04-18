@@ -15,6 +15,11 @@ run/main_scene="uid://ddba151pgcc67"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/always_on_top=true
+window/stretch/scale_mode="integer"
+
 [dotnet]
 
 project/assembly_name="Pixel Projector"
@@ -22,6 +27,14 @@ project/assembly_name="Pixel Projector"
 [editor]
 
 script/templates_search_path="res://ScriptTemplates"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "blue",
+"res://Custom Godot Resources/": "red",
+"res://ScriptTemplates/": "gray"
+}
 
 [input]
 
