@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://cavtvybajvjc6"]
 
 [ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_3e2tf"]
+[ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="2_b2ifw"]
+[ext_resource type="Script" uid="uid://cpj4frgum1t4a" path="res://Assets/Scripts/Components/InputComponent.cs" id="2_mifcl"]
+[ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_2thea"]
+[ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_jqe1p"]
+[ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="6_jqe1p"]
+[ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="7_n6g26"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0ccr5"]
 radius = 30.0
@@ -23,3 +29,34 @@ shape = SubResource("CircleShape2D_3e2tf")
 
 [node name="ComponentManager" type="Node2D" parent="." unique_id=1846392722]
 script = ExtResource("1_3e2tf")
+
+[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent")]
+script = ExtResource("2_mifcl")
+VelocityComponent = NodePath("../VelocityComponent")
+metadata/_custom_type_script = "uid://cpj4frgum1t4a"
+
+[node name="VelocityComponent" type="Node" parent="ComponentManager" unique_id=1872864884]
+script = ExtResource("3_2thea")
+metadata/_custom_type_script = "uid://d0rpv0w72nnme"
+
+[node name="MovementComponent" type="Node" parent="ComponentManager" unique_id=1565245488 node_paths=PackedStringArray("Body", "VelocityComponent")]
+script = ExtResource("4_jqe1p")
+Body = NodePath("../..")
+VelocityComponent = NodePath("../VelocityComponent")
+metadata/_custom_type_script = "uid://1diitr0ynwem"
+
+[node name="StateMachine" type="Node" parent="." unique_id=1532210069 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
+script = ExtResource("2_b2ifw")
+DefaultState = NodePath("IdleState")
+StateOwner = NodePath("..")
+ComponentManager = NodePath("../ComponentManager")
+metadata/_custom_type_script = "uid://bwui3qtjj7bp4"
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1191602721]
+script = ExtResource("6_jqe1p")
+metadata/_custom_type_script = "uid://dmcgbygaafx8b"
+
+[node name="RunningState" type="Node" parent="StateMachine" unique_id=1791222649 node_paths=PackedStringArray("MovementComponent")]
+script = ExtResource("7_n6g26")
+MovementComponent = NodePath("../../ComponentManager/MovementComponent")
+metadata/_custom_type_script = "uid://bdo0723a864yq"

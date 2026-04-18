@@ -1,0 +1,75 @@
+namespace ComponentSystem;
+
+using Godot;
+using SceneLoadingSystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+[GlobalClass]
+public partial class InputComponent : Node, IComponent, IHasComponentDependency
+{
+    [Signal]
+    public delegate void OnPressPlantEventHandler();
+    [Signal]
+    public delegate void OnPressInteractEventHandler();
+    [Signal]
+    public delegate void OnChangeMoveDirectionEventHandler(Vector2 moveDirection);
+
+    [Export]
+    public VelocityComponent VelocityComponent
+    {
+        get => velocityComponent;
+        private set
+        {
+            if (VelocityComponent == value) return;
+
+            if (VelocityComponent != null) OnChangeMoveDirection -= VelocityComponent.UpdateVelocityWithSmoothing;
+
+            velocityComponent = value;
+            if (VelocityComponent != null) OnChangeMoveDirection += VelocityComponent.UpdateVelocityWithSmoothing;
+        }
+    }
+    private VelocityComponent velocityComponent;
+
+    public Vector2 MoveDirection { get; private set; }
+
+    //debug only
+    [Export]
+    public Node Component { get; private set; }
+
+    public override void _EnterTree()
+    {
+        if (!VelocityComponent.IsValidInstance()) GD.PushWarning($"{PropertyName.VelocityComponent} at {GetPath()} should be defined explicitely in editor before running if available.");
+    }
+
+    public override void _Process(double delta)
+    {
+
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        UpdateMoveDirection();
+    }
+
+    private void UpdateMoveDirection()
+    {
+        if (VelocityComponent == null) return;
+
+        Vector2 newMoveDirection = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
+        if (!VelocityComponent.Velocity.IsEqualApprox(newMoveDirection))
+        {
+            MoveDirection = newMoveDirection;
+            EmitSignal(SignalName.OnChangeMoveDirection, MoveDirection);
+        }
+    }
+
+    void IHasComponentDependency.TryUpdateComponentDependencies(ComponentManager componentManager)
+    {
+        if (!VelocityComponent.IsValidInstance())
+        {
+            VelocityComponent = (VelocityComponent)componentManager.GetComponentMatch(typeof(VelocityComponent)) ?? VelocityComponent;
+        }
+    }
+}
