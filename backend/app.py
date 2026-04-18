@@ -6,26 +6,10 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 import dotenv
 
+from prompts import mixer_prompt
+
 dotenv.load_dotenv()
 
-mixer_prompt = """You are a worker in an office who mixes colors from the three primary colors, red, green and blue.
-You can collect the three primary colors at the central resource station. Then you can mix them in certain quantities to obtain either yellow, magenta or cyan.
-
-You have access to the following tools:
-- go_collect_paint: use this to collect a specific paint color from the resource station
-- mix_paints: use this to mix together the paints that you have to obtain new colors
-
-Only the following mixes work:
-- Mix red and green to obtain yellow
-- Mix red and blue obtain magenta
-- Mix green and blue obtain cyan
-
-You must mix together colors to obtain yellow, magenta or cyan.
-
-Look at the list of colors that you already have to choose how the obtain the target color.
-
-Put all the required tools you would use in a single answer.
-"""
 
 owned_red_paint: int = 0
 owned_green_paint: int = 0
@@ -82,10 +66,18 @@ app = Flask(__name__)
 
 @app.route("/mixer")
 def run_mixer():
-    target_color = request.args.get("color")
+    global owned_red_paint, owned_green_paint, owned_blue_paint
+    target_colors = request.args.get("color")
+    owned_colors = request.args.get("owned").split(" ")
+
+    owned_red_paint = int(owned_colors[0])
+    owned_green_paint = int(owned_colors[1])
+    owned_blue_paint = int(owned_colors[2])
+
+    print(", ".join(target_colors.split(" ")))
     messages = [("system", mixer_prompt),
                 ("human",
-                 f"You need to obtain {target_color}. You have {owned_red_paint} red paint, {owned_green_paint} green paint, and {owned_blue_paint} blue paint."),
+                 f"You need to obtain {", ".join(target_colors.split(" "))}. You have {owned_red_paint} red paint, {owned_green_paint} green paint, and {owned_blue_paint} blue paint."),
                 ]
 
     result = mixer_llm.invoke(messages)
