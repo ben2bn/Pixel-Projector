@@ -12,7 +12,7 @@ public partial class ItemBoxComponent : Node, IComponent
 	public delegate void OnPixelColorChangedEventHandler(Color newColor);
 
 	[Export]
-	public int MaxItemCount { get; private set; } = int.MaxValue;
+	public int MaxItemCount { get; set; } = int.MaxValue;
 
 	[Export]
 	public int ItemCount
@@ -47,7 +47,7 @@ public partial class ItemBoxComponent : Node, IComponent
 	public ColorRect ColorDisplay { get; private set; }
 
 	[Export]
-	public bool IsFixColor { get; private set; } = false;
+	public bool IsFixColor { get; set; } = false;
 
     public override void _Ready()
     {

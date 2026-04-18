@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dwdfvkros8k6l" path="res://Assets/Scenes/SpawnerBox.tscn" id="3_ficva"]
 [ext_resource type="PackedScene" uid="uid://clbtvlbu5qydo" path="res://Assets/Scenes/ItemBox.tscn" id="3_igdi0"]
 [ext_resource type="Script" uid="uid://d2kgyjl47xgw1" path="res://Assets/Scripts/Other/SpawnerManager.cs" id="3_l0ow6"]
+[ext_resource type="PackedScene" uid="uid://b8f5vqp88si6w" path="res://Assets/Scenes/MixerBox.tscn" id="3_yx7y1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qkbys"]
 vertices = PackedVector2Array(64, -36, 145, -15, 17, -15, -64, -36, 145, 113, 864, 608, -864, 608, 17, 113, 864, -608, -864, -608, 64, -364, -64, -364)
@@ -46,6 +47,8 @@ tile_set = SubResource("TileSet_l0ow6")
 
 [node name="ItemBox" parent="World" unique_id=1220010527 instance=ExtResource("3_igdi0")]
 position = Vector2(81, 49)
+
+[node name="MixerBox" parent="World" unique_id=835418122 instance=ExtResource("3_yx7y1")]
 
 [node name="Spawners" type="Node2D" parent="World" unique_id=687638448 node_paths=PackedStringArray("SpawnerIncrements")]
 script = ExtResource("3_l0ow6")
