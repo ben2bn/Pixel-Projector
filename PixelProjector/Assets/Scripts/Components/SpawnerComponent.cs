@@ -9,20 +9,9 @@ public partial class SpawnerComponent : Node, IComponent, IHasComponentDependenc
     [Export]
     public ItemBoxComponent ItemBoxComponent { get; private set; }
 
-	[Export]
-	public float SpawnTime
-    {
-        get => spawnTime;
-        set
-        {
-            if (value < 0.1) return;
+    [Export]
+    public int SpawnRate { get; set; } = 1;
 
-            spawnTime = value;
-            if (timer.IsValidInstance()) timer.WaitTime = SpawnTime;
-            else SetTimer();
-        }
-    }
-    private float spawnTime = 1f;
 
 	private Timer timer;
 
@@ -46,7 +35,7 @@ public partial class SpawnerComponent : Node, IComponent, IHasComponentDependenc
 
         timer.Autostart = true;
         timer.OneShot = false;
-        timer.WaitTime = SpawnTime;
+        timer.WaitTime = 5f;
 
         if (!timer.IsInsideTree())
         { 
@@ -57,7 +46,7 @@ public partial class SpawnerComponent : Node, IComponent, IHasComponentDependenc
 
     public void SpawnPixel()
     {
-        ItemBoxComponent.AddAmount(1);
+        ItemBoxComponent.AddAmount(SpawnRate);
     }
 
     void IHasComponentDependency.TryUpdateComponentDependencies(ComponentManager componentManager)

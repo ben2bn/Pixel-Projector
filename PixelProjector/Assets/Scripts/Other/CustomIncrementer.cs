@@ -6,7 +6,7 @@ public partial class CustomIncrementer : Control
     [Signal]
     public delegate void OnColorChangedEventHandler(Color newColor);
     [Signal]
-    public delegate void OnCountValueChangedEventHandler(int newValue);
+    public delegate void OnCountValueChangedEventHandler(Color color, int newValue);
 
     [Export]
     public Color Color
@@ -29,10 +29,10 @@ public partial class CustomIncrementer : Control
             if (!IsValidValue(value)) return;
 
             countValue = value;
-            EmitSignal(SignalName.OnCountValueChanged, countValue);
+            EmitSignal(SignalName.OnCountValueChanged, Color, countValue);
         }
     }
-    private int countValue = 0;
+    private int countValue = 1;
 
     [Export]
     public int ClampMaxCountValue { get; set; } = int.MaxValue;
@@ -59,12 +59,12 @@ public partial class CustomIncrementer : Control
         OnCountValueChanged += OnCountValueChange;
 
         OnColorChange(Color);
-        OnCountValueChange(CountValue);
+        OnCountValueChange(Color, CountValue);
     }
 
     public bool IsValidValue(int newValue)
     {
-        if (newValue < 0) return false;
+        if (newValue < 1) return false;
         if (newValue > ClampMaxCountValue) return false;
         return true;
     }
@@ -84,7 +84,7 @@ public partial class CustomIncrementer : Control
         ColorDisplay.SetColor(newColor);
     }
 
-    public void OnCountValueChange(int newValue)
+    public void OnCountValueChange(Color color, int newValue)
     {
         ValueDisplay.Text = newValue.ToString();
     }

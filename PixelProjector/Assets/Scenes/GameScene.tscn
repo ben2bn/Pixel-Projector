@@ -3,16 +3,17 @@
 [ext_resource type="PackedScene" uid="uid://cavtvybajvjc6" path="res://Assets/Scenes/Player.tscn" id="1_6us55"]
 [ext_resource type="Texture2D" uid="uid://dvqm8boqshkfn" path="res://Assets/Art/GroundTiles.png" id="1_qkbys"]
 [ext_resource type="PackedScene" uid="uid://cg6ecqy2716d6" path="res://Assets/Scenes/AI.tscn" id="2_c88g3"]
-[ext_resource type="PackedScene" uid="uid://ep0vflru0ccs" path="res://Assets/Scenes/SpawnerBox.tscn" id="3_ficva"]
+[ext_resource type="PackedScene" uid="uid://dwdfvkros8k6l" path="res://Assets/Scenes/SpawnerBox.tscn" id="3_ficva"]
 [ext_resource type="PackedScene" uid="uid://clbtvlbu5qydo" path="res://Assets/Scenes/ItemBox.tscn" id="3_igdi0"]
+[ext_resource type="Script" uid="uid://d2kgyjl47xgw1" path="res://Assets/Scripts/Other/SpawnerManager.cs" id="3_l0ow6"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qkbys"]
-vertices = PackedVector2Array(48, -52, 129, 1, 33, 1, -48, -52, 129, 97, 880, 624, -880, 624, 33, 97, 880, -624, 48, -152, 48, -248, -880, -624, 48, -252, 48, -348, -48, -348, -48, -252, -48, -248, -48, -152, 48, -148, -48, -148)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 5, 4, 1), PackedInt32Array(8, 1, 9, 10), PackedInt32Array(7, 6, 11, 3), PackedInt32Array(12, 8, 10), PackedInt32Array(8, 12, 13), PackedInt32Array(11, 8, 13, 14), PackedInt32Array(15, 12, 10, 16), PackedInt32Array(11, 14, 15), PackedInt32Array(11, 15, 16), PackedInt32Array(11, 16, 17), PackedInt32Array(1, 0, 18), PackedInt32Array(9, 1, 18), PackedInt32Array(9, 18, 19, 17), PackedInt32Array(11, 17, 19), PackedInt32Array(11, 19, 3), PackedInt32Array(7, 3, 2)])
+vertices = PackedVector2Array(64, -36, 145, -15, 17, -15, -64, -36, 145, 113, 864, 608, -864, 608, 17, 113, 864, -608, -864, -608, 64, -364, -64, -364)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 5, 4, 1), PackedInt32Array(7, 6, 9, 3), PackedInt32Array(1, 0, 10, 8), PackedInt32Array(9, 8, 10, 11), PackedInt32Array(3, 2, 7), PackedInt32Array(9, 11, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1217, -960, -1215, 961, 1219, 968, 1216, -958)])
 parsed_collision_mask = 1
 cell_size = 16.0
-agent_radius = 16.0
+agent_radius = 32.0
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_qkbys"]
 tile_data = PackedInt32Array(0, 65538, 0, 65536, 65538, 0, 1, 65538, 0, 65537, 65538, 0, 2, 131074, 0, 65538, 131074, 0, 131074, 65538, 0, 196610, 65538, 0, 3, 131074, 0, 65539, 131074, 0, 131075, 65538, 0, 196611, 65538, 0)
@@ -46,32 +47,37 @@ tile_set = SubResource("TileSet_l0ow6")
 [node name="ItemBox" parent="World" unique_id=1220010527 instance=ExtResource("3_igdi0")]
 position = Vector2(81, 49)
 
-[node name="RedSpawnerBox" parent="World" unique_id=937921659 instance=ExtResource("3_ficva")]
+[node name="Spawners" type="Node2D" parent="World" unique_id=687638448 node_paths=PackedStringArray("SpawnerIncrements")]
+script = ExtResource("3_l0ow6")
+SpawnerIncrements = NodePath("../../Player/UI/MarginContainer/SpawnerController/SpawnerIncrements")
+
+[node name="RedSpawnerBox" parent="World/Spawners" unique_id=937921659 instance=ExtResource("3_ficva")]
 position = Vector2(0, -100)
 
-[node name="BlueSpawnerBox" parent="World" unique_id=365964458 instance=ExtResource("3_ficva")]
+[node name="BlueSpawnerBox" parent="World/Spawners" unique_id=365964458 instance=ExtResource("3_ficva")]
 position = Vector2(0, -200)
 
-[node name="ItemBoxComponent" parent="World/BlueSpawnerBox/ComponentManager" parent_id_path=PackedInt32Array(365964458, 1623796880) index="0" unique_id=1316519909]
+[node name="ItemBoxComponent" parent="World/Spawners/BlueSpawnerBox/ComponentManager" parent_id_path=PackedInt32Array(365964458, 1623796880) index="0" unique_id=1316519909]
 PixelColor = Color(0, 0, 1, 1)
 
-[node name="SpawnerComponent" parent="World/BlueSpawnerBox/ComponentManager" parent_id_path=PackedInt32Array(365964458, 1623796880) index="1" unique_id=1494756028]
-SpawnTime = 2.0
-
-[node name="GreenSpawnerBox" parent="World" unique_id=909074450 instance=ExtResource("3_ficva")]
+[node name="GreenSpawnerBox" parent="World/Spawners" unique_id=909074450 instance=ExtResource("3_ficva")]
 position = Vector2(0, -300)
 
-[node name="ItemBoxComponent" parent="World/GreenSpawnerBox/ComponentManager" parent_id_path=PackedInt32Array(909074450, 1623796880) index="0" unique_id=1316519909]
+[node name="ItemBoxComponent" parent="World/Spawners/GreenSpawnerBox/ComponentManager" parent_id_path=PackedInt32Array(909074450, 1623796880) index="0" unique_id=1316519909]
 PixelColor = Color(0, 1, 0, 1)
 
-[node name="SpawnerComponent" parent="World/GreenSpawnerBox/ComponentManager" parent_id_path=PackedInt32Array(909074450, 1623796880) index="1" unique_id=1494756028]
-SpawnTime = 3.0
-
 [node name="Player" parent="." unique_id=287953057 instance=ExtResource("1_6us55")]
+collision_layer = 0
 
 [node name="AI" parent="." unique_id=1753803494 instance=ExtResource("2_c88g3")]
-position = Vector2(-111, -2)
+position = Vector2(-399, -147)
+collision_layer = 0
 
-[editable path="World/RedSpawnerBox"]
-[editable path="World/BlueSpawnerBox"]
-[editable path="World/GreenSpawnerBox"]
+[node name="PathfindingComponent" parent="AI/ComponentManager" parent_id_path=PackedInt32Array(1753803494, 2072505304) index="3" unique_id=2096076424 node_paths=PackedStringArray("TargetDestination")]
+TargetDestination = NodePath("../../../World/ItemBox")
+
+[editable path="World/Spawners/RedSpawnerBox"]
+[editable path="World/Spawners/BlueSpawnerBox"]
+[editable path="World/Spawners/GreenSpawnerBox"]
+[editable path="Player"]
+[editable path="AI"]
