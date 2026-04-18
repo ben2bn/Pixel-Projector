@@ -16,6 +16,13 @@ Mixing colors together consumes the primary colors used.
 
 Skip obtaining colors that are either red, green and blue.
 
+You must optimize your work to never be idling.
+Some paints are already available to you, but some need waiting for them to become available.
+Waiting for red, green or blue to become available takes 5 seconds. Mixing a color takes 1 second.
+
+Make it so you are working as much as possible, prioritizing the faster tasks first.
+
+
 Put all the required tools you would use in a single answer.
 """
 
@@ -31,7 +38,11 @@ Look at the list of colors that you already have to choose how the obtain and po
 
 Placing colors in the template consumes the target color.
 
-Cyan, magenta and yellow need time to become available and won't be ready to collect immediately. Optimize your process based on this fact to never be idling.
+You must optimize your work to never be idling.
+Some paints are already available to you, but some need waiting for them to become available.
+Waiting for red, green or blue to become available takes 5 seconds. Waiting for cyan, magenta or yellow to become available takes 10 seconds.
+
+Make it so you are working as much as possible, prioritizing the faster tasks first.
 
 Put all the required tools you would use in a single answer.
 """

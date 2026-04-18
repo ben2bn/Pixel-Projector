@@ -41,5 +41,5 @@ def mix_paints(color_1: str, color_2: str) -> str:
 mixer_llm = ChatGoogleGenerativeAI(
     model="gemini-3-flash-preview",
     temperature=1.0,
-    thinking_level="minimal"
+    thinking_level="medium"
 ).bind_tools([go_collect_paint, mix_paints])
