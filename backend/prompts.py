@@ -22,6 +22,7 @@ Waiting for red, green or blue to become available takes 5 seconds. Mixing a col
 
 Make it so you are working as much as possible, prioritizing the faster tasks first.
 
+Always mix paint after collecting two paints for mixing.
 
 Put all the required tools you would use in a single answer.
 """

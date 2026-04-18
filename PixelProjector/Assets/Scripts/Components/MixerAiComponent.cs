@@ -32,6 +32,18 @@ public partial class MixerAiComponent : Node, IComponent
 	[Export]
 	public StaticBody2D GreenBox { get; set; }
 
+	[Export]
+	public InteractComponent InteractComp { get; set; }
+
+	[Export]
+	public HoldPixelComponent HoldPixelComp { get; set; }
+
+	[Export]
+	public StaticBody2D Mixer { get; set; }
+
+	[Export]
+	public StaticBody2D DepositBox { get; set; }
+
 	[Signal]
 	public delegate void StartAiLoopEventHandler();
 
@@ -62,7 +74,7 @@ public partial class MixerAiComponent : Node, IComponent
 		// Perform a GET request. The URL below returns JSON as of writing.
 		GD.Print("Performing HTTP request...");
 		string colorQuests = QuestMaker.GetHTTPColorQuests();
-		Error error = httpRequest.Request("http://10.20.17.103:5000/mixer?color="+colorQuests+"&owned=0+0+0+0+0+0&available=0+0+0+0+0+0");
+		Error error = httpRequest.Request("http://10.20.17.103:5000/mixer?color=" + colorQuests + "&owned=0+0+0+0+0+0&available=0+0+0+0+0+0");
 		GD.Print("HTTP request sent.");
 		if (error != Error.Ok)
 		{
@@ -107,14 +119,6 @@ public partial class MixerAiComponent : Node, IComponent
 	{
 		foreach (var task in TaskQueue)
 		{
-			// foreach (System.ComponentModel.PropertyDescriptor descriptor in System.ComponentModel.TypeDescriptor.GetProperties(task))
-			// {
-			// 	string name = descriptor.Name;
-			// 	object value = descriptor.GetValue(task);
-			// 	GD.Print("{0}={1}", name, value);
-			// }
-			// GD.Print($"Processing task: {task.Name} with args: {task.Args}");
-			// GD.Print($"Task has {task.Args.Length} arguments");
 			if (task.Name == "go_collect_paint")
 			{
 				GD.Print($"Processing task: {task.Name} with args: {task.Args[0]}");
@@ -133,10 +137,38 @@ public partial class MixerAiComponent : Node, IComponent
 						break;
 				}
 				PathComponent.TargetDestination = target;
+				await ToSignal(PathComponent, "OnReachTargetPosition");
+				InteractComp.InteractCurrentInteractable();
+				while (HoldPixelComp.PixelColor == null)
+				{
+					await ToSignal(GetTree().CreateTimer(0.5), "timeout");
+					InteractComp.InteractCurrentInteractable();
+					// GD.Print("Waiting to hold pixel...");
+					// GD.Print($"Current held pixel color: {HoldPixelComp.PixelColor}");
+				}
+				PathComponent.TargetDestination = Mixer;
+				await ToSignal(PathComponent, "OnReachTargetPosition");
+				InteractComp.InteractCurrentInteractable();
 			}
-			GD.Print($"Waiting to reach target for task: {task.Name}");
-			await ToSignal(PathComponent, "OnReachTargetPosition");
-			GD.Print($"Reached target for task: {task.Name}");
+			else if (task.Name == "mix_paints")
+			{
+				GD.Print($"Processing task: {task.Name} with args: {task.Args[0]}, {task.Args[1]}");
+				// PathComponent.TargetDestination = Mixer;
+				// InteractComp.InteractCurrentInteractable();
+				while (HoldPixelComp.PixelColor == null)
+				{
+					await ToSignal(GetTree().CreateTimer(0.5), "timeout");
+					InteractComp.InteractCurrentInteractable();
+				}
+				PathComponent.TargetDestination = DepositBox;
+				await ToSignal(PathComponent, "OnReachTargetPosition");
+				InteractComp.InteractCurrentInteractable();
+				while (HoldPixelComp.PixelColor == null)
+				{
+					await ToSignal(GetTree().CreateTimer(0.5), "timeout");
+					InteractComp.InteractCurrentInteractable();
+				}
+			}
 		}
 	}
 }

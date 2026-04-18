@@ -67,6 +67,8 @@ metadata/_custom_type_script = "uid://c5t1ttkomimsb"
 shape = SubResource("CircleShape2D_msvdv")
 
 [node name="InteractComponent" type="Area2D" parent="ComponentManager" unique_id=1642840308]
+collision_layer = 0
+collision_mask = 8
 script = ExtResource("5_wcmux")
 metadata/_custom_type_script = "uid://bx3deg1ai6tu3"
 
@@ -93,9 +95,11 @@ grow_vertical = 2
 script = ExtResource("7_qff7d")
 metadata/_custom_type_script = "uid://bi7nesh63pksp"
 
-[node name="MixerAiComponent" type="Node" parent="ComponentManager" unique_id=1672757130 node_paths=PackedStringArray("PathComponent")]
+[node name="MixerAiComponent" type="Node" parent="ComponentManager" unique_id=1672757130 node_paths=PackedStringArray("PathComponent", "InteractComp", "HoldPixelComp")]
 script = ExtResource("8_qff7d")
 PathComponent = NodePath("../PathfindingComponent")
+InteractComp = NodePath("../InteractComponent")
+HoldPixelComp = NodePath("../HoldPixelComponent")
 metadata/_custom_type_script = "uid://bkgnbjmdj8c15"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]

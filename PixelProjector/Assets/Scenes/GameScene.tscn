@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://t507bjcovbku" path="res://Assets/Scenes/ReturnBox.tscn" id="4_5a1o6"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qkbys"]
-vertices = PackedVector2Array(64, -36, 145, -15, 17, -15, -64, -36, 145, 113, 864, 608, -864, 608, 17, 113, 864, -608, -864, -608, 64, -364, -64, -364)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 5, 4, 1), PackedInt32Array(7, 6, 9, 3), PackedInt32Array(1, 0, 10, 8), PackedInt32Array(9, 8, 10, 11), PackedInt32Array(3, 2, 7), PackedInt32Array(9, 11, 3)])
+vertices = PackedVector2Array(145, 113, 864, 608, -864, 608, 17, 113, 332, -91, 332, -219, 864, -608, 145, -15, 204, -91, 64, -136, 204, -219, 64, -64, 64, -364, 64, -15, -64, -64, -64, -136, -246, 64, -64, 64, -246, -64, 17, 64, -374, 64, -864, -608, -374, -64, -64, -364)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 1), PackedInt32Array(4, 1, 0, 7, 8), PackedInt32Array(9, 10, 8, 7, 11), PackedInt32Array(10, 9, 12), PackedInt32Array(7, 13, 11), PackedInt32Array(9, 11, 14, 15), PackedInt32Array(16, 14, 17, 2), PackedInt32Array(14, 16, 18, 15), PackedInt32Array(17, 19, 3, 2), PackedInt32Array(20, 16, 2), PackedInt32Array(20, 2, 21, 22), PackedInt32Array(23, 15, 18, 22, 21), PackedInt32Array(23, 21, 6, 12), PackedInt32Array(12, 6, 5, 10)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1217, -960, -1215, 961, 1219, 968, 1216, -958)])
 parsed_collision_mask = 1
 cell_size = 16.0
@@ -76,7 +76,7 @@ script = ExtResource("3_l0ow6")
 SpawnerIncrements = NodePath("../../Player/UI/SpawnerUI/SpawnerController/SpawnerIncrements")
 
 [node name="RedSpawnerBox" parent="World/Spawners" unique_id=937921659 instance=ExtResource("3_ficva")]
-position = Vector2(0, -100)
+position = Vector2(268, -155)
 
 [node name="BlueSpawnerBox" parent="World/Spawners" unique_id=365964458 instance=ExtResource("3_ficva")]
 position = Vector2(0, -200)
@@ -99,6 +99,14 @@ collision_layer = 0
 
 [node name="PathfindingComponent" parent="AI/ComponentManager" parent_id_path=PackedInt32Array(1753803494, 2072505304) index="3" unique_id=2096076424 node_paths=PackedStringArray("TargetDestination")]
 TargetDestination = NodePath("../../../World/ItemBox")
+
+[node name="MixerAiComponent" parent="AI/ComponentManager" parent_id_path=PackedInt32Array(1753803494, 2072505304) index="5" unique_id=1672757130 node_paths=PackedStringArray("RedBox", "BlueBox", "GreenBox", "Mixer", "DepositBox", "QuestMaker")]
+RedBox = NodePath("../../../World/Spawners/RedSpawnerBox")
+BlueBox = NodePath("../../../World/Spawners/BlueSpawnerBox")
+GreenBox = NodePath("../../../World/Spawners/GreenSpawnerBox")
+Mixer = NodePath("../../../World/MixerBox")
+DepositBox = NodePath("../../../World/ReturnBox")
+QuestMaker = NodePath("../../..")
 
 [editable path="World/ReturnBox"]
 [editable path="World/MixerBox"]
