@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://r53w1ta5adwi" path="res://Assets/Art/ItemBox.png" id="1_fg53w"]
 [ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_wj72y"]
 [ext_resource type="Script" uid="uid://cfmehxskx01mc" path="res://Assets/Scripts/Components/ItemBoxComponent.cs" id="2_3n37p"]
-[ext_resource type="Script" uid="uid://d11qsqkekcgga" path="res://Assets/Scripts/Components/InteractableComponent.cs" id="2_i5thx"]
+[ext_resource type="Script" uid="uid://bo067stelryqa" path="res://Assets/Scripts/Components/ItemBoxInteractableComponent.cs" id="4_fg53w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0onf8"]
 size = Vector2(64, 64)
@@ -76,11 +76,12 @@ PixelColor = Color(0, 0, 1, 1)
 ItemCountDisplay = NodePath("../../ItemDisplay/Count")
 ColorDisplay = NodePath("../../ItemDisplay/ColorRect")
 
-[node name="InteractableComponent" type="Area2D" parent="ComponentManager" unique_id=1255675140]
+[node name="ItemBoxInteractableComponent" type="Area2D" parent="ComponentManager" unique_id=944457623 node_paths=PackedStringArray("ItemBoxComponent")]
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("2_i5thx")
-metadata/_custom_type_script = "uid://d11qsqkekcgga"
+script = ExtResource("4_fg53w")
+ItemBoxComponent = NodePath("../ItemBoxComponent")
+metadata/_custom_type_script = "uid://bo067stelryqa"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/InteractableComponent" unique_id=1140474247]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/ItemBoxInteractableComponent" unique_id=1140474247]
 shape = SubResource("CircleShape2D_i5thx")

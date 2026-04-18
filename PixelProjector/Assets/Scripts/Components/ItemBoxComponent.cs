@@ -82,6 +82,8 @@ public partial class ItemBoxComponent : Node, IComponent
 		}
 
 		ItemCountDisplay.GetParent<Control>().Visible = true;
+		ColorDisplay.Visible = true;
+		ItemCountDisplay.Visible = true;
 		ItemCountDisplay.Text = itemCount.ToString();
 	}
 

@@ -50,6 +50,9 @@ position = Vector2(81, 49)
 
 [node name="MixerBox" parent="World" unique_id=835418122 instance=ExtResource("3_yx7y1")]
 
+[node name="MixingComponent" parent="World/MixerBox/ComponentManager" parent_id_path=PackedInt32Array(835418122, 1623796880) index="1" unique_id=1530529994 node_paths=PackedStringArray("ItemCountDisplay")]
+ItemCountDisplay = NodePath("../../ItemDisplay/Count")
+
 [node name="Spawners" type="Node2D" parent="World" unique_id=687638448 node_paths=PackedStringArray("SpawnerIncrements")]
 script = ExtResource("3_l0ow6")
 SpawnerIncrements = NodePath("../../Player/UI/MarginContainer/SpawnerController/SpawnerIncrements")
@@ -79,6 +82,7 @@ collision_layer = 0
 [node name="PathfindingComponent" parent="AI/ComponentManager" parent_id_path=PackedInt32Array(1753803494, 2072505304) index="3" unique_id=2096076424 node_paths=PackedStringArray("TargetDestination")]
 TargetDestination = NodePath("../../../World/ItemBox")
 
+[editable path="World/MixerBox"]
 [editable path="World/Spawners/RedSpawnerBox"]
 [editable path="World/Spawners/BlueSpawnerBox"]
 [editable path="World/Spawners/GreenSpawnerBox"]

@@ -13,6 +13,8 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
     public delegate void OnPressBonkEventHandler();
     [Signal]
     public delegate void OnChangeMoveDirectionEventHandler(Vector2 moveDirection);
+    [Signal]
+    public delegate void OnDebugEventHandler();
 
     [Export]
     public VelocityComponent VelocityComponent
@@ -32,6 +34,9 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
 
     public Vector2 MoveDirection { get; private set; }
 
+    [Export]
+    public Node Debug { get; set; }
+
     public override void _EnterTree()
     {
         if (!VelocityComponent.IsValidInstance()) GD.PushWarning($"{PropertyName.VelocityComponent} at {GetPath()} should be defined explicitely in editor before running if available.");
@@ -40,6 +45,12 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
     public override void _Process(double delta)
     {
         CheckBonkInput();
+
+        if (Input.IsActionJustPressed("Debug"))
+        {
+            if (Debug.IsValidInstance()) (Debug as InteractComponent).InteractCurrentInteractable();
+            EmitSignal(SignalName.OnDebug);
+        }
     }
 
     public override void _PhysicsProcess(double delta)

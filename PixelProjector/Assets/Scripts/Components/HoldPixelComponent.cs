@@ -30,7 +30,7 @@ public partial class HoldPixelComponent : ColorRect, IComponent
         if (!PixelColor.HasValue) Visible = false;
         else
         {
-            SetColor(pixelColor.Value);
+            SetColor(PixelColor.Value);
             Visible = true;
         }
     }

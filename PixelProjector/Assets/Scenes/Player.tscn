@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://bw06op8n6l0ki" path="res://Assets/Scripts/Components/HurtBoxComponent.cs" id="6_y63lr"]
 [ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="7_n6g26"]
 [ext_resource type="Script" uid="uid://hrf34y8ib6hm" path="res://Assets/Scripts/Components/BonkingComponent.cs" id="7_y63lr"]
+[ext_resource type="Script" uid="uid://bi7nesh63pksp" path="res://Assets/Scripts/Components/HoldPixelComponent.cs" id="9_3iaiu"]
+[ext_resource type="Script" uid="uid://bx3deg1ai6tu3" path="res://Assets/Scripts/Components/InteractComponent.cs" id="10_ausrs"]
 [ext_resource type="PackedScene" uid="uid://bcsjbm04x1gb3" path="res://Assets/Scenes/CustomIncrementer.tscn" id="12_evjpc"]
 [ext_resource type="Script" uid="uid://qrlywhyfywd3" path="res://Assets/Scripts/Other/SpawnerController.cs" id="12_o5e1w"]
 
@@ -118,9 +120,10 @@ shape = SubResource("CircleShape2D_3e2tf")
 script = ExtResource("1_3e2tf")
 ComponentManagerOwner = NodePath(".")
 
-[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent")]
+[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent", "Debug")]
 script = ExtResource("2_mifcl")
 VelocityComponent = NodePath("../VelocityComponent")
+Debug = NodePath("../InteractComponent")
 metadata/_custom_type_script = "uid://cpj4frgum1t4a"
 
 [node name="VelocityComponent" type="Node" parent="ComponentManager" unique_id=1872864884]
@@ -155,6 +158,28 @@ AnimationPlayer = NodePath("../../AnimationPlayer")
 BonkingAnimation = ExtResource("1_y63lr")
 InputComponent = NodePath("../InputComponent")
 metadata/_custom_type_script = "uid://hrf34y8ib6hm"
+
+[node name="HoldPixelComponent" type="ColorRect" parent="ComponentManager" unique_id=1391482848]
+visible = false
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 20.0
+grow_vertical = 2
+script = ExtResource("9_3iaiu")
+metadata/_custom_type_script = "uid://bi7nesh63pksp"
+
+[node name="InteractComponent" type="Area2D" parent="ComponentManager" unique_id=1734127175]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("10_ausrs")
+metadata/_custom_type_script = "uid://bx3deg1ai6tu3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/InteractComponent" unique_id=708659807]
+shape = SubResource("CircleShape2D_3e2tf")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1532210069 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
 script = ExtResource("2_b2ifw")

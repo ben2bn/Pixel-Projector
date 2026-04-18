@@ -1,12 +1,95 @@
 [gd_scene format=3 uid="uid://b8f5vqp88si6w"]
 
-[ext_resource type="PackedScene" uid="uid://clbtvlbu5qydo" path="res://Assets/Scenes/ItemBox.tscn" id="1_npbr5"]
+[ext_resource type="Texture2D" uid="uid://r53w1ta5adwi" path="res://Assets/Art/ItemBox.png" id="1_gp6a4"]
 [ext_resource type="Script" uid="uid://bvllpev0m37y6" path="res://Assets/Scripts/Components/MixingComponent.cs" id="2_niptg"]
+[ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="2_t5h7m"]
+[ext_resource type="Script" uid="uid://cfmehxskx01mc" path="res://Assets/Scripts/Components/ItemBoxComponent.cs" id="3_dwn0s"]
+[ext_resource type="Script" uid="uid://7bn65x3qtsac" path="res://Assets/Scripts/Components/MixerBoxInteractableComponent.cs" id="5_tbhqs"]
 
-[node name="MixerBox" unique_id=1220010527 instance=ExtResource("1_npbr5")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0onf8"]
+size = Vector2(64, 64)
 
-[node name="MixingComponent" type="Node" parent="ComponentManager" parent_id_path=PackedInt32Array(1623796880) index="1" unique_id=1530529994 node_paths=PackedStringArray("ItemBoxComponent", "ColorDisplay")]
+[sub_resource type="LabelSettings" id="LabelSettings_3n37p"]
+line_spacing = 0.0
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5thx"]
+radius = 96.0
+
+[node name="MixerBox" type="StaticBody2D" unique_id=1220010527]
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435495274]
+texture_filter = 1
+texture = ExtResource("1_gp6a4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=528692479]
+shape = SubResource("RectangleShape2D_0onf8")
+
+[node name="ItemDisplay" type="Panel" parent="." unique_id=493730343]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(48, 48)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ItemDisplay" unique_id=1243358970]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Count" type="Label" parent="ItemDisplay" unique_id=2106267234]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+text = "0"
+label_settings = SubResource("LabelSettings_3n37p")
+horizontal_alignment = 2
+vertical_alignment = 2
+clip_text = true
+
+[node name="ComponentManager" type="Node2D" parent="." unique_id=1623796880 node_paths=PackedStringArray("ComponentManagerOwner")]
+script = ExtResource("2_t5h7m")
+ComponentManagerOwner = NodePath("..")
+
+[node name="ItemBoxComponent" type="Node" parent="ComponentManager" unique_id=1316519909 node_paths=PackedStringArray("ItemCountDisplay", "ColorDisplay")]
+script = ExtResource("3_dwn0s")
+PixelColor = Color(0, 0, 1, 1)
+ItemCountDisplay = NodePath("../../ItemDisplay/Count")
+ColorDisplay = NodePath("../../ItemDisplay/ColorRect")
+
+[node name="MixingComponent" type="Node" parent="ComponentManager" unique_id=1530529994 node_paths=PackedStringArray("ItemBoxComponent", "ColorDisplay")]
 script = ExtResource("2_niptg")
 ItemBoxComponent = NodePath("../ItemBoxComponent")
 ColorDisplay = NodePath("../../ItemDisplay/ColorRect")
 metadata/_custom_type_script = "uid://bvllpev0m37y6"
+
+[node name="MixerBoxInteractableComponent" type="Area2D" parent="ComponentManager" unique_id=1182703378 node_paths=PackedStringArray("ItemBoxComponent", "MixingComponent")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_tbhqs")
+ItemBoxComponent = NodePath("../ItemBoxComponent")
+MixingComponent = NodePath("../MixingComponent")
+metadata/_custom_type_script = "uid://7bn65x3qtsac"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/MixerBoxInteractableComponent" unique_id=1140474247]
+shape = SubResource("CircleShape2D_i5thx")
