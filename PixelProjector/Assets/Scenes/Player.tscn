@@ -92,9 +92,10 @@ shape = SubResource("CircleShape2D_3e2tf")
 script = ExtResource("1_3e2tf")
 ComponentManagerOwner = NodePath(".")
 
-[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent")]
+[node name="InputComponent" type="Node" parent="ComponentManager" unique_id=1673871546 node_paths=PackedStringArray("VelocityComponent", "InteractComponent")]
 script = ExtResource("2_mifcl")
 VelocityComponent = NodePath("../VelocityComponent")
+InteractComponent = NodePath("")
 metadata/_custom_type_script = "uid://cpj4frgum1t4a"
 
 [node name="VelocityComponent" type="Node" parent="ComponentManager" unique_id=1872864884]

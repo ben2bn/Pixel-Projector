@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cavtvybajvjc6" path="res://Assets/Scenes/Player.tscn" id="1_6us55"]
 [ext_resource type="PackedScene" uid="uid://cg6ecqy2716d6" path="res://Assets/Scenes/AI.tscn" id="2_c88g3"]
+[ext_resource type="PackedScene" uid="uid://clbtvlbu5qydo" path="res://Assets/Scenes/ItemBox.tscn" id="3_igdi0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6us55"]
 size = Vector3(10, 10, 10)
@@ -16,3 +17,6 @@ mesh = SubResource("BoxMesh_6us55")
 
 [node name="AI" parent="." unique_id=1753803494 instance=ExtResource("2_c88g3")]
 position = Vector2(-111, -2)
+
+[node name="ItemBox" parent="." unique_id=1220010527 instance=ExtResource("3_igdi0")]
+position = Vector2(81, 49)

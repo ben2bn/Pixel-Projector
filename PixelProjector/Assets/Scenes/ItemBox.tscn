@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://clbtvlbu5qydo"]
+
+[ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_wj72y"]
+[ext_resource type="Script" uid="uid://d11qsqkekcgga" path="res://Assets/Scripts/Components/InteractableComponent.cs" id="2_i5thx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0onf8"]
+size = Vector2(40, 40)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wj72y"]
+size = Vector3(40, 40, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5thx"]
+radius = 60.0
+
+[node name="ItemBox" type="StaticBody2D" unique_id=1220010527]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=528692479]
+shape = SubResource("RectangleShape2D_0onf8")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1334675006]
+mesh = SubResource("BoxMesh_wj72y")
+
+[node name="ComponentManager" type="Node2D" parent="." unique_id=1623796880]
+script = ExtResource("1_wj72y")
+
+[node name="InteractableComponent" type="Area2D" parent="ComponentManager" unique_id=1255675140]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_i5thx")
+metadata/_custom_type_script = "uid://d11qsqkekcgga"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/InteractableComponent" unique_id=1140474247]
+shape = SubResource("CircleShape2D_i5thx")

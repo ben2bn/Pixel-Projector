@@ -32,7 +32,6 @@ public partial class InputComponent : Node, IComponent, IHasComponentDependency
 
     public Vector2 MoveDirection { get; private set; }
 
-
     public override void _EnterTree()
     {
         if (!VelocityComponent.IsValidInstance()) GD.PushWarning($"{PropertyName.VelocityComponent} at {GetPath()} should be defined explicitely in editor before running if available.");

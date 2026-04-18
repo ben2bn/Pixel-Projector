@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d0rpv0w72nnme" path="res://Assets/Scripts/Components/VelocityComponent.cs" id="3_mpbkf"]
 [ext_resource type="Script" uid="uid://1diitr0ynwem" path="res://Assets/Scripts/Components/MovementComponent.cs" id="4_egh1s"]
 [ext_resource type="Script" uid="uid://c5t1ttkomimsb" path="res://Assets/Scripts/Components/HitBoxComponent.cs" id="5_mooy1"]
+[ext_resource type="Script" uid="uid://bx3deg1ai6tu3" path="res://Assets/Scripts/Components/InteractComponent.cs" id="5_wcmux"]
 [ext_resource type="Script" uid="uid://bwui3qtjj7bp4" path="res://Custom Godot Resources/StateSystem/StateMachine.cs" id="6_snuto"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="7_x3g7x"]
 [ext_resource type="Script" uid="uid://bdo0723a864yq" path="res://Assets/Scripts/States/RunningState.cs" id="8_2srsc"]
@@ -51,6 +52,13 @@ script = ExtResource("5_mooy1")
 metadata/_custom_type_script = "uid://c5t1ttkomimsb"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/HitBoxComponent" unique_id=1805753156]
+shape = SubResource("CircleShape2D_msvdv")
+
+[node name="InteractComponent" type="Area2D" parent="ComponentManager" unique_id=1642840308]
+script = ExtResource("5_wcmux")
+metadata/_custom_type_script = "uid://bx3deg1ai6tu3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/InteractComponent" unique_id=381731587]
 shape = SubResource("CircleShape2D_msvdv")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
