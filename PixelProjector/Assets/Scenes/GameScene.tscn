@@ -1,12 +1,14 @@
 [gd_scene format=4 uid="uid://ddba151pgcc67"]
 
 [ext_resource type="PackedScene" uid="uid://cavtvybajvjc6" path="res://Assets/Scenes/Player.tscn" id="1_6us55"]
+[ext_resource type="Script" uid="uid://jtemuvwgdgk8" path="res://Assets/Scripts/Other/QuestMaker.cs" id="1_nyck5"]
 [ext_resource type="Texture2D" uid="uid://dvqm8boqshkfn" path="res://Assets/Art/GroundTiles.png" id="1_qkbys"]
 [ext_resource type="PackedScene" uid="uid://cg6ecqy2716d6" path="res://Assets/Scenes/AI.tscn" id="2_c88g3"]
 [ext_resource type="PackedScene" uid="uid://dwdfvkros8k6l" path="res://Assets/Scenes/SpawnerBox.tscn" id="3_ficva"]
 [ext_resource type="PackedScene" uid="uid://clbtvlbu5qydo" path="res://Assets/Scenes/ItemBox.tscn" id="3_igdi0"]
 [ext_resource type="Script" uid="uid://d2kgyjl47xgw1" path="res://Assets/Scripts/Other/SpawnerManager.cs" id="3_l0ow6"]
 [ext_resource type="PackedScene" uid="uid://b8f5vqp88si6w" path="res://Assets/Scenes/MixerBox.tscn" id="3_yx7y1"]
+[ext_resource type="PackedScene" uid="uid://t507bjcovbku" path="res://Assets/Scenes/ReturnBox.tscn" id="4_5a1o6"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qkbys"]
 vertices = PackedVector2Array(64, -36, 145, -15, 17, -15, -64, -36, 145, 113, 864, 608, -864, 608, 17, 113, 864, -608, -864, -608, 64, -364, -64, -364)
@@ -35,8 +37,18 @@ physics_layer_0/collision_mask = 0
 sources/2 = SubResource("TileSetAtlasSource_ficva")
 pattern_0 = SubResource("TileMapPattern_qkbys")
 
-[node name="GameScene" type="Node2D" unique_id=16237204]
+[node name="GameScene" type="Node2D" unique_id=16237204 node_paths=PackedStringArray("GameScoreCounter", "RedCounter", "BlueCounter", "GreenCounter", "CyanCounter", "YellowCounter", "MagentaCounter")]
 texture_filter = 1
+script = ExtResource("1_nyck5")
+MinQuestTimer = 0.1
+MaxQuestTimer = 0.5
+GameScoreCounter = NodePath("Player/UI/MarginContainer/PanelContainer/GameScore")
+RedCounter = NodePath("Player/UI/QuestUI/Quests/QuestCounts/RedQuest/PanelContainer/Count")
+BlueCounter = NodePath("Player/UI/QuestUI/Quests/QuestCounts/BlueQuest/PanelContainer/Count")
+GreenCounter = NodePath("Player/UI/QuestUI/Quests/QuestCounts/GreenQuest/PanelContainer/Count")
+CyanCounter = NodePath("Player/UI/QuestUI/Quests/QuestCounts/CyanQuest/PanelContainer/Count")
+YellowCounter = NodePath("Player/UI/QuestUI/Quests/QuestCounts/YellowQuest/PanelContainer/Count")
+MagentaCounter = NodePath("Player/UI/QuestUI/Quests/QuestCounts/MagentaQuest/PanelContainer/Count")
 
 [node name="World" type="NavigationRegion2D" parent="." unique_id=1569169327]
 navigation_polygon = SubResource("NavigationPolygon_qkbys")
@@ -48,6 +60,12 @@ tile_set = SubResource("TileSet_l0ow6")
 [node name="ItemBox" parent="World" unique_id=1220010527 instance=ExtResource("3_igdi0")]
 position = Vector2(81, 49)
 
+[node name="ReturnBox" parent="World" unique_id=1571095349 instance=ExtResource("4_5a1o6")]
+position = Vector2(-310, 0)
+
+[node name="ReturnBoxInteractableComponent" parent="World/ReturnBox/ComponentManager" parent_id_path=PackedInt32Array(1571095349, 1623796880) index="0" unique_id=13327041 node_paths=PackedStringArray("QuestMaker")]
+QuestMaker = NodePath("../../../..")
+
 [node name="MixerBox" parent="World" unique_id=835418122 instance=ExtResource("3_yx7y1")]
 
 [node name="MixingComponent" parent="World/MixerBox/ComponentManager" parent_id_path=PackedInt32Array(835418122, 1623796880) index="1" unique_id=1530529994 node_paths=PackedStringArray("ItemCountDisplay")]
@@ -55,7 +73,7 @@ ItemCountDisplay = NodePath("../../ItemDisplay/Count")
 
 [node name="Spawners" type="Node2D" parent="World" unique_id=687638448 node_paths=PackedStringArray("SpawnerIncrements")]
 script = ExtResource("3_l0ow6")
-SpawnerIncrements = NodePath("../../Player/UI/MarginContainer/SpawnerController/SpawnerIncrements")
+SpawnerIncrements = NodePath("../../Player/UI/SpawnerUI/SpawnerController/SpawnerIncrements")
 
 [node name="RedSpawnerBox" parent="World/Spawners" unique_id=937921659 instance=ExtResource("3_ficva")]
 position = Vector2(0, -100)
@@ -82,6 +100,7 @@ collision_layer = 0
 [node name="PathfindingComponent" parent="AI/ComponentManager" parent_id_path=PackedInt32Array(1753803494, 2072505304) index="3" unique_id=2096076424 node_paths=PackedStringArray("TargetDestination")]
 TargetDestination = NodePath("../../../World/ItemBox")
 
+[editable path="World/ReturnBox"]
 [editable path="World/MixerBox"]
 [editable path="World/Spawners/RedSpawnerBox"]
 [editable path="World/Spawners/BlueSpawnerBox"]

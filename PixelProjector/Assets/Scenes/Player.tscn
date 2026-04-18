@@ -79,6 +79,10 @@ height = 64.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_evjpc"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_3iaiu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ausrs"]
+
 [node name="Player" type="CharacterBody2D" unique_id=287953057]
 collision_layer = 2
 collision_mask = 3
@@ -199,7 +203,7 @@ metadata/_custom_type_script = "uid://bdo0723a864yq"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=184385250]
 
-[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=372721958]
+[node name="SpawnerUI" type="MarginContainer" parent="UI" unique_id=372721958]
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -210,17 +214,17 @@ grow_vertical = 2
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 
-[node name="SpawnerController" type="VBoxContainer" parent="UI/MarginContainer" unique_id=537086061 node_paths=PackedStringArray("ValueLeftDisplay", "SpawnerIncrements")]
+[node name="SpawnerController" type="VBoxContainer" parent="UI/SpawnerUI" unique_id=537086061 node_paths=PackedStringArray("ValueLeftDisplay", "SpawnerIncrements")]
 layout_mode = 2
 script = ExtResource("12_o5e1w")
 ValueLeftDisplay = NodePath("Panel/ValueLeft")
 SpawnerIncrements = NodePath("SpawnerIncrements")
 
-[node name="Panel" type="Panel" parent="UI/MarginContainer/SpawnerController" unique_id=1516210759]
+[node name="Panel" type="Panel" parent="UI/SpawnerUI/SpawnerController" unique_id=1516210759]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="ValueLeft" type="Label" parent="UI/MarginContainer/SpawnerController/Panel" unique_id=1173689611]
+[node name="ValueLeft" type="Label" parent="UI/SpawnerUI/SpawnerController/Panel" unique_id=1173689611]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -232,16 +236,186 @@ label_settings = SubResource("LabelSettings_evjpc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpawnerIncrements" type="VBoxContainer" parent="UI/MarginContainer/SpawnerController" unique_id=395480223]
+[node name="SpawnerIncrements" type="VBoxContainer" parent="UI/SpawnerUI/SpawnerController" unique_id=395480223]
 layout_mode = 2
 
-[node name="Red" parent="UI/MarginContainer/SpawnerController/SpawnerIncrements" unique_id=669463488 instance=ExtResource("12_evjpc")]
+[node name="Red" parent="UI/SpawnerUI/SpawnerController/SpawnerIncrements" unique_id=669463488 instance=ExtResource("12_evjpc")]
 layout_mode = 2
 
-[node name="Green" parent="UI/MarginContainer/SpawnerController/SpawnerIncrements" unique_id=1995111958 instance=ExtResource("12_evjpc")]
+[node name="Green" parent="UI/SpawnerUI/SpawnerController/SpawnerIncrements" unique_id=1995111958 instance=ExtResource("12_evjpc")]
 layout_mode = 2
 Color = Color(0, 1, 0, 1)
 
-[node name="Blue" parent="UI/MarginContainer/SpawnerController/SpawnerIncrements" unique_id=1624166936 instance=ExtResource("12_evjpc")]
+[node name="Blue" parent="UI/SpawnerUI/SpawnerController/SpawnerIncrements" unique_id=1624166936 instance=ExtResource("12_evjpc")]
 layout_mode = 2
 Color = Color(0, 0, 1, 1)
+
+[node name="QuestUI" type="MarginContainer" parent="UI" unique_id=713095731]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 144.0
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="Quests" type="VBoxContainer" parent="UI/QuestUI" unique_id=1589246809]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="UI/QuestUI/Quests" unique_id=1732413487]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="UI/QuestUI/Quests/Panel" unique_id=1257430263]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quests"
+label_settings = SubResource("LabelSettings_evjpc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuestCounts" type="VBoxContainer" parent="UI/QuestUI/Quests" unique_id=402419895]
+layout_mode = 2
+
+[node name="RedQuest" type="HBoxContainer" parent="UI/QuestUI/Quests/QuestCounts" unique_id=790668625]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/QuestUI/Quests/QuestCounts/RedQuest" unique_id=298112257]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/QuestUI/Quests/QuestCounts/RedQuest" unique_id=1708389011]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Count" type="Label" parent="UI/QuestUI/Quests/QuestCounts/RedQuest/PanelContainer" unique_id=619129671]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_3iaiu")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GreenQuest" type="HBoxContainer" parent="UI/QuestUI/Quests/QuestCounts" unique_id=900176729]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/QuestUI/Quests/QuestCounts/GreenQuest" unique_id=1762785116]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/QuestUI/Quests/QuestCounts/GreenQuest" unique_id=1018975862]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Count" type="Label" parent="UI/QuestUI/Quests/QuestCounts/GreenQuest/PanelContainer" unique_id=1269857878]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_3iaiu")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BlueQuest" type="HBoxContainer" parent="UI/QuestUI/Quests/QuestCounts" unique_id=780779191]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/QuestUI/Quests/QuestCounts/BlueQuest" unique_id=912444610]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/QuestUI/Quests/QuestCounts/BlueQuest" unique_id=865798878]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Count" type="Label" parent="UI/QuestUI/Quests/QuestCounts/BlueQuest/PanelContainer" unique_id=852095997]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_3iaiu")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CyanQuest" type="HBoxContainer" parent="UI/QuestUI/Quests/QuestCounts" unique_id=57696048]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/QuestUI/Quests/QuestCounts/CyanQuest" unique_id=1386284670]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+color = Color(0, 1, 1, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/QuestUI/Quests/QuestCounts/CyanQuest" unique_id=298826354]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Count" type="Label" parent="UI/QuestUI/Quests/QuestCounts/CyanQuest/PanelContainer" unique_id=2068769549]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_3iaiu")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="YellowQuest" type="HBoxContainer" parent="UI/QuestUI/Quests/QuestCounts" unique_id=1572400282]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/QuestUI/Quests/QuestCounts/YellowQuest" unique_id=1518563150]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+color = Color(1, 1, 0, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/QuestUI/Quests/QuestCounts/YellowQuest" unique_id=723223295]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Count" type="Label" parent="UI/QuestUI/Quests/QuestCounts/YellowQuest/PanelContainer" unique_id=1027714719]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_3iaiu")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MagentaQuest" type="HBoxContainer" parent="UI/QuestUI/Quests/QuestCounts" unique_id=1096783495]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/QuestUI/Quests/QuestCounts/MagentaQuest" unique_id=1331037388]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/QuestUI/Quests/QuestCounts/MagentaQuest" unique_id=752147000]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Count" type="Label" parent="UI/QuestUI/Quests/QuestCounts/MagentaQuest/PanelContainer" unique_id=2113179064]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_3iaiu")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=2103917404]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_right = 80.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/MarginContainer" unique_id=308810494]
+layout_mode = 2
+
+[node name="GameScore" type="Label" parent="UI/MarginContainer/PanelContainer" unique_id=1118900027]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_ausrs")
+horizontal_alignment = 1
+vertical_alignment = 1

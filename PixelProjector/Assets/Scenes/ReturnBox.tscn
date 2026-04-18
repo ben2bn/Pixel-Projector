@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://t507bjcovbku"]
+
+[ext_resource type="Texture2D" uid="uid://r53w1ta5adwi" path="res://Assets/Art/ItemBox.png" id="1_6woor"]
+[ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="2_wawyl"]
+[ext_resource type="Script" uid="uid://ctojdxnoqym4e" path="res://Assets/Scripts/Components/ReturnBoxInteractableComponent.cs" id="3_81ip3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0onf8"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5thx"]
+radius = 96.0
+
+[node name="ReturnBox" type="StaticBody2D" unique_id=1220010527]
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435495274]
+texture_filter = 1
+texture = ExtResource("1_6woor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=528692479]
+shape = SubResource("RectangleShape2D_0onf8")
+
+[node name="ComponentManager" type="Node2D" parent="." unique_id=1623796880 node_paths=PackedStringArray("ComponentManagerOwner")]
+script = ExtResource("2_wawyl")
+ComponentManagerOwner = NodePath("..")
+
+[node name="ReturnBoxInteractableComponent" type="Area2D" parent="ComponentManager" unique_id=13327041]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_81ip3")
+metadata/_custom_type_script = "uid://ctojdxnoqym4e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComponentManager/ReturnBoxInteractableComponent" unique_id=1140474247]
+shape = SubResource("CircleShape2D_i5thx")
