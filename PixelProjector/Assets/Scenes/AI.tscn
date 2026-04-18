@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://csmxybltq1fq0" path="res://Assets/Scripts/Components/PathfindingComponent.cs" id="7_lnwrg"]
 [ext_resource type="Script" uid="uid://bi7nesh63pksp" path="res://Assets/Scripts/Components/HoldPixelComponent.cs" id="7_qff7d"]
 [ext_resource type="Script" uid="uid://dmcgbygaafx8b" path="res://Assets/Scripts/States/IdleState.cs" id="7_x3g7x"]
+[ext_resource type="Script" uid="uid://bkgnbjmdj8c15" path="res://Assets/Scripts/Components/MixerAiComponent.cs" id="8_qff7d"]
 [ext_resource type="Script" uid="uid://c2no1h3vg3g0k" path="res://Assets/Scripts/States/AIMovingState.cs" id="10_lnwrg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_msvdv"]
@@ -91,6 +92,11 @@ offset_bottom = 20.0
 grow_vertical = 2
 script = ExtResource("7_qff7d")
 metadata/_custom_type_script = "uid://bi7nesh63pksp"
+
+[node name="MixerAiComponent" type="Node" parent="ComponentManager" unique_id=1672757130 node_paths=PackedStringArray("PathComponent")]
+script = ExtResource("8_qff7d")
+PathComponent = NodePath("../PathfindingComponent")
+metadata/_custom_type_script = "uid://bkgnbjmdj8c15"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1284840757 node_paths=PackedStringArray("DefaultState", "StateOwner", "ComponentManager")]
 script = ExtResource("6_snuto")

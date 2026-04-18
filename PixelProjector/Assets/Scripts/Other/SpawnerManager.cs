@@ -10,7 +10,7 @@ public partial class SpawnerManager : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        if (!SpawnerIncrements.IsValidInstance()) GD.PushWarning($"{PropertyName.SpawnerIncrements} at {GetPath()} should be defined explicitely in editor before running if available.");
+		if (!SpawnerIncrements.IsValidInstance()) GD.PushWarning($"{PropertyName.SpawnerIncrements} at {GetPath()} should be defined explicitely in editor before running if available.");
 
 		foreach (Node spawnerIncrement in SpawnerIncrements.GetChildren())
 		{
@@ -18,7 +18,7 @@ public partial class SpawnerManager : Node
 			CustomIncrementer incrementer = spawnerIncrement as CustomIncrementer;
 			incrementer.OnCountValueChanged += OnChangeCountValueOfIncrementer;
 		}
-    }
+	}
 
 	public void OnChangeCountValueOfIncrementer(Color color, int newValue)
 	{
