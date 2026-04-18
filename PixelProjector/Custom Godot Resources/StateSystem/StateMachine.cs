@@ -2,7 +2,6 @@ namespace StateSystem;
 
 using ComponentSystem;
 using Godot;
-using SaveSystem;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +17,7 @@ using System.Collections.Generic;
 /// <para>Remark: only one <see cref="State"/> per type can added to <see cref="States"/></para>
 /// </remarks>
 [GlobalClass]
-public partial class StateMachine : Node, IHasStateDependency, ISavableData
+public partial class StateMachine : Node, IHasStateDependency
 {
     /// <summary>
     /// Emitted when a state is added to or removed from the <see cref="StateMachine"/>.
@@ -406,23 +405,5 @@ public partial class StateMachine : Node, IHasStateDependency, ISavableData
                 TransitionState(CurrentState, true);
             }
         }
-    }
-
-    List<string> ISavableData.GetPropertyNamesToSave()
-    {
-        return new List<string>()
-        {
-            PropertyName.DefaultState,
-            PropertyName.DefaultState,
-        };
-    }
-
-    Dictionary<string, object> ISavableData.GetPropertiesToSave()
-    {
-        return new Dictionary<string, object>()
-        {
-            { PropertyName.DefaultState, DefaultState },
-            { PropertyName.CurrentState, CurrentState },
-        };
     }
 }

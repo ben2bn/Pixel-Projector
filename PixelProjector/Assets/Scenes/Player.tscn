@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cavtvybajvjc6"]
+
+[ext_resource type="Script" uid="uid://cxs2j1vr507st" path="res://Custom Godot Resources/ComponentSystem/ComponentManager.cs" id="1_3e2tf"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0ccr5"]
+radius = 30.0
+height = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3e2tf"]
+radius = 30.0
+
+[node name="Player" type="CharacterBody2D" unique_id=287953057]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=262761708]
+mesh = SubResource("CapsuleMesh_0ccr5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=711766881]
+shape = SubResource("CircleShape2D_3e2tf")
+
+[node name="CameraAnchor" type="Node2D" parent="." unique_id=882152357]
+
+[node name="Camera2D" type="Camera2D" parent="CameraAnchor" unique_id=1416998643]
+
+[node name="ComponentManager" type="Node2D" parent="." unique_id=1846392722]
+script = ExtResource("1_3e2tf")
